@@ -1,9 +1,17 @@
 <?php
 session_start();
-    if (!isset($_SESSION['user_id'])) {
+require_once 'config.php';
+if (!isset($_SESSION['user_id'])) {
     header("Location: connexion.php");
     exit();
 }
+?>
+
+<?php
+$stmt = $pdo->prepare("SELECT * FROM tasks WHERE utilisateur_id = ?");
+$utilisateur = $_SESSION['user_id'];
+$stmt->execute([$utilisateur]);
+$taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +23,14 @@ session_start();
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <?php foreach ($taches as $tache) { ?>
+    <div>
+        <h3><?php echo $tache['titre']; ?></h3>
+        <p><?php echo $tache['description']; ?></p>
+        <p><?php echo $tache['date_echeance']; ?></p>
+        <p><?php echo $tache['priorite']; ?></p>
+    </div>
+    <?php } ?>
     <form method="POST" action="api.php">
         <input type="text" name="title">
         <textarea name="description"></textarea>
