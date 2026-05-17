@@ -1,0 +1,50 @@
+<?php
+session_start();
+
+require_once 'config.php';
+
+$action = $_POST['action'];
+
+header('Content-Type: application/json');
+
+switch ($action) {
+    case 'connexion':
+        $email_connexion = $_POST['email'];
+        $mot_de_passe_connexion = $_POST['password'];
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email_connexion]);
+        $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($utilisateur && password_verify($mot_de_passe_connexion, $utilisateur['mot_de_passe'])) {
+        $_SESSION['user_id'] = $utilisateur['id'];
+        header("Location: index.php");
+        exit();
+        } else {
+        http_response_code(401);
+        echo json_encode(['erreur' => 'Email ou mot de passe incorrect']);
+        exit();
+        }
+        break;
+    case 'inscription':
+        $email_inscription = $_POST['email'];
+        $mot_de_passe_inscription = $_POST['password'];
+        $confirmation_mot_de_passe = $_POST['password_confirm'];
+
+        if ($mot_de_passe_inscription !== $confirmation_mot_de_passe) {
+            http_response_code(400);
+            echo json_encode(['erreur' => 'Les mots de passe ne correspondent pas']);
+            exit();
+        } else {
+            $mot_de_passe_hashe = password_hash($mot_de_passe_inscription, PASSWORD_DEFAULT);
+            $stmt = $pdo->prepare("INSERT INTO users (email, mot_de_passe) VALUES (?, ?)");
+            $stmt->execute([$email_inscription, $mot_de_passe_hashe]);
+            $_SESSION['message'] = "Bienvenue parmi nous !";
+            header("Location: connexion.php");
+            exit();
+        }
+        break;
+    case 'deconnexion':
+        session_destroy();
+        header("Location: connexion.php");
+        exit();
+        break;
+}
