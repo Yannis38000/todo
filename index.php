@@ -30,6 +30,24 @@ $taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p><?php echo $tache['date_echeance']; ?></p>
         <p><?php echo $tache['priorite']; ?></p>
     </div>
+    <form method="POST" action="api.php">
+    <input type="hidden" name="action" value="supprimer_tache">
+    <input type="hidden" name="id" value="<?php echo $tache['id']; ?>">
+    <input type="submit" value="Supprimer">
+    </form>
+    <form method="POST" action="api.php">
+    <input type="hidden" name="action" value="modifier_tache">
+    <input type="hidden" name="id" value="<?php echo $tache['id']; ?>">
+    <input type="text" name="title" value="<?php echo $tache['titre']; ?>">
+    <textarea name="description"><?php echo $tache['description']; ?></textarea>
+    <input type="date" name="date" value="<?php echo $tache['date_echeance']; ?>">
+    <select name="priority">
+        <option value="basse">Basse</option>
+        <option value="moyenne">Moyenne</option>
+        <option value="haute">Haute</option>
+    </select>
+    <input type="submit" value="Modifier">
+    </form>
     <?php } ?>
     <form method="POST" action="api.php">
         <input type="text" name="title">

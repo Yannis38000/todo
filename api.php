@@ -60,4 +60,28 @@ switch ($action) {
         header("Location: index.php");
         exit();
         break;
+    case 'supprimer_tache':
+        $stmt = $pdo->prepare("DELETE FROM tasks WHERE id = ? AND utilisateur_id = ?");
+        $id_tache = $_POST['id'];
+        $user_id = $_SESSION['user_id'];
+        $stmt->execute([$id_tache, $user_id]);
+        http_response_code(200);
+        echo json_encode(['message' => 'Tache suprimee !']);
+        header("Location: index.php");
+        exit();
+        break;
+    case 'modifier_tache':
+        $stmt = $pdo->prepare("UPDATE tasks SET titre = ?, description = ?, date_echeance = ?, priorite = ? WHERE id = ? AND utilisateur_id = ?");
+        $titre_tache = $_POST['title'];
+        $description_tache = $_POST['description'];
+        $date_echeance = $_POST['date'];
+        $priorite = $_POST['priority'];
+        $id_tache = $_POST['id'];
+        $user_id = $_SESSION['user_id'];
+        $stmt->execute([$titre_tache, $description_tache, $date_echeance, $priorite, $id_tache, $user_id]);
+        http_response_code(200);
+        echo json_encode(['message' => 'Tache modifiee !']);
+        header("Location: index.php");
+        exit();
+        break;
 }
