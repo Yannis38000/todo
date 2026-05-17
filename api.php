@@ -47,4 +47,17 @@ switch ($action) {
         header("Location: connexion.php");
         exit();
         break;
+    case 'creer_tache':
+        $titre_tache = $_POST['title'];
+        $description_tache = $_POST['description'];
+        $date_echeance = $_POST['date'];
+        $priorite = $_POST['priority'];
+        $user_id = $_SESSION['user_id'];
+        $stmt = $pdo->prepare("INSERT INTO tasks (titre, description, date_echeance, priorite, utilisateur_id) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$titre_tache, $description_tache, $date_echeance, $priorite, $user_id]);
+        http_response_code(201);
+        echo json_encode(['message' => 'Tache creee !']);
+        header("Location: index.php");
+        exit();
+        break;
 }
