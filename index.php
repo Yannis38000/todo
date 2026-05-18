@@ -21,8 +21,21 @@ $taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes tâches</title>
     <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
 </head>
 <body>
+    <form method="POST" action="api.php" id="form-creer">
+        <input type="text" name="title">
+        <textarea name="description"></textarea>
+        <input type="date" name="date">
+        <select name="priority">
+        <option value="basse">Basse</option>
+        <option value="moyenne">Moyenne</option>
+        <option value="haute">Haute</option>
+        </select>
+        <input type="submit" name="submit">
+        <input type="hidden" name="action" value="creer_tache">
+    </form>
     <?php foreach ($taches as $tache) { ?>
     <div>
         <h3><?php echo $tache['titre']; ?></h3>
@@ -30,12 +43,7 @@ $taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p><?php echo $tache['date_echeance']; ?></p>
         <p><?php echo $tache['priorite']; ?></p>
     </div>
-    <form method="POST" action="api.php">
-    <input type="hidden" name="action" value="supprimer_tache">
-    <input type="hidden" name="id" value="<?php echo $tache['id']; ?>">
-    <input type="submit" value="Supprimer">
-    </form>
-    <form method="POST" action="api.php">
+    <form method="POST" action="api.php" id="form-modifier-<?php echo $tache['id']; ?>">
     <input type="hidden" name="action" value="modifier_tache">
     <input type="hidden" name="id" value="<?php echo $tache['id']; ?>">
     <input type="text" name="title" value="<?php echo $tache['titre']; ?>">
@@ -48,19 +56,12 @@ $taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </select>
     <input type="submit" value="Modifier">
     </form>
-    <?php } ?>
-    <form method="POST" action="api.php">
-        <input type="text" name="title">
-        <textarea name="description"></textarea>
-        <input type="date" name="date">
-        <select name="priority">
-        <option value="basse">Basse</option>
-        <option value="moyenne">Moyenne</option>
-        <option value="haute">Haute</option>
-        </select>
-        <input type="submit" name="submit">
-        <input type="hidden" name="action" value="creer_tache">
+    <form method="POST" action="api.php" id="form-supprimer-<?php echo $tache['id']; ?>">
+    <input type="hidden" name="action" value="supprimer_tache">
+    <input type="hidden" name="id" value="<?php echo $tache['id']; ?>">
+    <input type="submit" value="Supprimer">
     </form>
+    <?php } ?>
 </body>
 </html>
 
