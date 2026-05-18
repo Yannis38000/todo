@@ -62,6 +62,25 @@ $taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <input type="submit" value="Supprimer">
     </form>
     <?php } ?>
+    <form method="GET" action="index.php" id="form-filtres">
+    <select name="statut">
+        <option value="toutes">Toutes</option>
+        <option value="en_cours">En cours</option>
+        <option value="terminees">Terminées</option>
+    </select>
+    <select name="priorite">
+        <option value="toutes">Toutes</option>
+        <option value="basse">Basse</option>
+        <option value="normale">Normale</option>
+        <option value="haute">Haute</option>
+    </select>
+    <select name="tri">
+        <option value="date_creation">Date de création</option>
+        <option value="date_echeance">Date d'échéance</option>
+        <option value="priorite">Priorité</option>
+    </select>
+    <input type="submit" value="Filtrer">
+</form>
 </body>
 </html>
 

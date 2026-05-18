@@ -15,13 +15,13 @@ switch ($action) {
         $stmt->execute([$email_connexion]);
         $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($utilisateur && password_verify($mot_de_passe_connexion, $utilisateur['mot_de_passe'])) {
-        $_SESSION['user_id'] = $utilisateur['id'];
-        header("Location: index.php");
-        exit();
+            $_SESSION['user_id'] = $utilisateur['id'];
+            header("Location: index.php");
+            exit();
         } else {
-        http_response_code(401);
-        echo json_encode(['erreur' => 'Email ou mot de passe incorrect']);
-        exit();
+            http_response_code(401);
+            echo json_encode(['erreur' => 'Email ou mot de passe incorrect']);
+            exit();
         }
         break;
     case 'inscription':
@@ -48,6 +48,7 @@ switch ($action) {
         exit();
         break;
     case 'creer_tache':
+        try {
         $titre_tache = $_POST['title'];
         $description_tache = $_POST['description'];
         $date_echeance = $_POST['date'];
@@ -57,18 +58,26 @@ switch ($action) {
         $stmt->execute([$titre_tache, $description_tache, $date_echeance, $priorite, $user_id]);
         http_response_code(201);
         echo json_encode(['message' => 'Tache creee !']);
-        header("Location: index.php");
-        exit();
+        } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['erreur' => 'Erreur serveur']);
+        }
         break;
     case 'supprimer_tache':
+        try {
         $stmt = $pdo->prepare("DELETE FROM tasks WHERE id = ? AND utilisateur_id = ?");
         $id_tache = $_POST['id'];
         $user_id = $_SESSION['user_id'];
         $stmt->execute([$id_tache, $user_id]);
         http_response_code(200);
         echo json_encode(['message' => 'Tache suprimee !']);
+        } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['erreur' => 'Erreur serveur']);
+        }
         break;
     case 'modifier_tache':
+        try {
         $stmt = $pdo->prepare("UPDATE tasks SET titre = ?, description = ?, date_echeance = ?, priorite = ? WHERE id = ? AND utilisateur_id = ?");
         $titre_tache = $_POST['title'];
         $description_tache = $_POST['description'];
@@ -79,5 +88,9 @@ switch ($action) {
         $stmt->execute([$titre_tache, $description_tache, $date_echeance, $priorite, $id_tache, $user_id]);
         http_response_code(200);
         echo json_encode(['message' => 'Tache modifiee !']);
+        } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['erreur' => 'Erreur serveur']);
+        }
         break;
 }
