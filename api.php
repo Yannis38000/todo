@@ -93,4 +93,17 @@ switch ($action) {
         echo json_encode(['erreur' => 'Erreur serveur']);
         }
         break;
+    case 'terminer_tache':
+        try {
+        $id_tache = $_POST['id'];
+        $user_id = $_SESSION['user_id'];
+        $stmt = $pdo->prepare("UPDATE tasks SET terminee = NOT terminee WHERE id = ? AND utilisateur_id = ?");
+        $stmt->execute([$id_tache, $user_id]);
+        http_response_code(200);
+        echo json_encode(['message' => 'Statut modifié !']);
+        } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['erreur' => 'Erreur serveur']);
+        }
+        break;
 }

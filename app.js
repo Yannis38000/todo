@@ -46,4 +46,15 @@ document.querySelectorAll('form[id^="form-supprimer"]').forEach(function(form) {
     });
 });
 
+// Tache terminee
+document.querySelectorAll('form[id^="form-terminer"]').forEach(function(form) {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const donnees = new FormData(form);
+        fetch('api.php', { method: 'POST', body: donnees })
+        .then(function(reponse) { return reponse.json(); })
+        .then(function(data) { location.reload(); });
+    });
+});
+
 });
