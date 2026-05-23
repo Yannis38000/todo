@@ -83,7 +83,12 @@ $taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <input type="hidden" name="action" value="creer_tache">
     </form>
     <?php foreach ($taches as $tache) { ?>
-    <div class="<?php echo $tache['terminee'] ? 'terminee' : ''; ?>">
+    <div class="
+    <?php echo $tache['terminee'] ? 'terminee' : ''; ?> 
+    <?php echo $tache['date_echeance'] < date('Y-m-d') && !$tache['terminee'] ? 'en-retard' : ''; ?>">
+    <?php if ($tache['date_echeance'] < date('Y-m-d') && !$tache['terminee']): ?>
+    <p style="color: red;">⚠️ En retard !</p>
+    <?php endif; ?>
         <h3><?php echo $tache['titre']; ?></h3>
         <p><?php echo $tache['description']; ?></p>
         <p><?php echo $tache['date_echeance']; ?></p>
