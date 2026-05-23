@@ -1,9 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: #f0f4f8;
+    color: #333;
+    padding: 30px;
+}
+
+h1 {
+    color: #6c8ebf;
+    margin-bottom: 25px;
+    font-size: 2rem;
+}
+
+h3 {
+    color: #5a7a9f;
+    margin-bottom: 8px;
+}
+
+form {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(108, 142, 191, 0.1);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px 14px;
+    margin: 6px 0;
+    border: 1px solid #c9d8ec;
+    border-radius: 8px;
+    background-color: #f8fafd;
+    color: #444;
+    font-size: 0.95rem;
+}
+
+input[type="submit"] {
+    width: auto;
+    padding: 10px 20px;
+    background-color: #6c8ebf;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    margin-top: 8px;
+    transition: background-color 0.2s;
+}
+
+input[type="submit"]:hover {
+    background-color: #5a7aaa;
+}
+
+input[type="submit"][value="Supprimer"] {
+    background-color: #e07b7b;
+}
+
+input[type="submit"][value="Supprimer"]:hover {
+    background-color: #c96666;
+}
+
+input[type="submit"][value="Terminer"],
+input[type="submit"][value="Réouvrir"] {
+    background-color: #7bbf9e;
+}
+
+input[type="submit"][value="Terminer"]:hover,
+input[type="submit"][value="Réouvrir"]:hover {
+    background-color: #65a888;
+}
+
+div {
+    background: white;
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(108, 142, 191, 0.08);
+}
+
 .terminee {
     opacity: 0.5;
     text-decoration: line-through;
 }
 
 .en-retard {
-    border-left: 4px solid red;
-    background-color: #ffe0e0;
+    border-left: 4px solid #e07b7b;
+    background-color: #fdf0f0;
+}
+
+#pagination a {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    background-color: #6c8ebf;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+#pagination a:hover {
+    background-color: #5a7aaa;
+}
+
+#form-filtres {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#form-filtres select,
+#form-filtres input[type="submit"] {
+    width: auto;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #6c8ebf;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    margin-top: 8px;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #5a7aaa;
 }
