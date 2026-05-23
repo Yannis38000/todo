@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="header">
+        <h1>Rejoins la team ! 🚀</h1>
+    </div>
     <form method="POST" action="api.php">
         <input type="email" name="email">
         <input type="password" name="password">

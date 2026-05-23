@@ -70,6 +70,13 @@ $taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="app.js" defer></script>
 </head>
 <body>
+    <div id="header">
+        <h1>Bienvenue dans votre To-Do List !</h1>
+            <form method="POST" action="api.php">
+                <input type="hidden" name="action" value="deconnexion">
+                <input type="submit" value="Déconnexion">
+            </form>
+    </div>
     <form method="POST" action="api.php" id="form-creer">
         <input type="text" name="title">
         <textarea name="description"></textarea>
